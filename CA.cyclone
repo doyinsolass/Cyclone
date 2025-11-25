@@ -1,0 +1,53 @@
+option-trace=true;
+graph CA {
+
+    bool y;
+    bool r1;
+    bool r2;
+
+    normal start node S00
+    {
+        r1 = false;
+        r2 = false;
+        y = !r1 && !r2;
+    }
+
+    normal node S01
+    {
+        r1 = r1 != r2;
+        r2 = !r2;
+        y = !r1 && !r2;
+    }
+
+    normal node S10
+    {
+        r1 = r1 != r2;
+        r2 = !r2;
+        y = !r1 && !r2;
+    }
+
+    normal node S11
+    {
+        r1 = r1 != r2;
+        r2 = !r2;
+        y = !r1 && !r2;
+    }
+
+    edge e0 
+    { S00 -> S01 where (r1 == false && r2 == false);}
+
+    edge e1 
+    { S01 -> S10 where (r1 == false && r2 == true);}
+
+    edge e2 
+    { S10 -> S11 where (r1 == true && r2 == false);}
+
+    edge e3 
+    { S11 -> S00 where (r1 == true && r2 == true);}
+
+    goal 
+    {
+        check for 20 reach (S00)
+    }
+
+}
